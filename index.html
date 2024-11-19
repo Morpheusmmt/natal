@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio de Amigo Secreto</title>
+    
+    <!-- Link para o CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDK via CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Amigo Secreto - Sorteio</h2>
+        <input type="text" id="nome" placeholder="Digite seu nome">
+        <button id="sortearButton">Realizar Sorteio</button>
+        <div id="erro" style="display:none;"></div> <!-- Mensagem de erro -->
+        <div id="resultado" style="display:none;"></div>
+    </div>
+</body>
+</html>
