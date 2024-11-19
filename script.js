@@ -59,12 +59,19 @@ function realizarSorteio() {
 
             // Realiza o sorteio
             let nomesDisponiveis = [...participantes];
+            let sorteados = new Set(); // Usamos um Set para garantir que ninguém seja sorteado duas vezes
+
             participantes.forEach(participante => {
                 let sorteado;
                 do {
                     sorteado = nomesDisponiveis[Math.floor(Math.random() * nomesDisponiveis.length)];
-                } while (sorteado === participante || (participante === "Maida" && (sorteado === "Bryan" || sorteado === "Erick")));
+                } while (
+                    sorteado === participante || // Não pode sortear a si mesmo
+                    sorteados.has(sorteado) || // Não pode repetir sorteio
+                    (["Maida", "Emily"].includes(participante) && (sorteado === "Bryan" || sorteado === "Erick")) // Restrições de quem pode ser sorteado
+                );
                 sorteios[participante] = sorteado;
+                sorteados.add(sorteado); // Adiciona o sorteado ao Set para não ser sorteado novamente
                 nomesDisponiveis = nomesDisponiveis.filter(nome => nome !== sorteado);
             });
 
