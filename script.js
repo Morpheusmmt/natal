@@ -45,10 +45,12 @@ function realizarSorteio() {
     get(sorteioRef)
         .then(snapshot => {
             if (snapshot.exists()) {
+                // Se o sorteio já foi realizado, mostrar o resultado
+                const sorteadoAnterior = snapshot.val();
                 const erroDiv = document.getElementById('erro');
-                erroDiv.textContent = "Você já realizou o sorteio!";
+                erroDiv.textContent = "Você já realizou o sorteio! Você tirou " + sorteadoAnterior + ".";
                 erroDiv.style.display = 'block';  // Exibe a mensagem de erro
-                return;
+                return;  // Retorna, não realizando outro sorteio
             }
 
             // Limpa a mensagem de erro caso o nome seja válido e o usuário não tenha sorteado
@@ -66,7 +68,8 @@ function realizarSorteio() {
                 nomesDisponiveis = nomesDisponiveis.filter(nome => nome !== sorteado);
             });
 
-            salvarSorteio(sorteios, nomeUsuario);  // Passando o nome do usuário que realizou o sorteio
+            // Salva o sorteio individualmente para cada usuário
+            salvarSorteio(nomeUsuario, sorteios[nomeUsuario]);  // Salva o sorteio do usuário específico
         })
         .catch((error) => {
             console.log("Erro ao verificar sorteio do usuário: ", error);
@@ -74,12 +77,12 @@ function realizarSorteio() {
 }
 
 // Função para salvar o sorteio no Firebase
-function salvarSorteio(sorteios, nomeUsuario) {
-    const sorteioRef = ref(database, 'sorteios');  // Referência para a pasta "sorteios" no banco de dados
-    set(sorteioRef, sorteios)  // Salvando o objeto sorteios
+function salvarSorteio(nomeUsuario, sorteado) {
+    const sorteioRef = ref(database, 'sorteios/' + nomeUsuario);  // Referência para o sorteio de um usuário específico
+    set(sorteioRef, sorteado)  // Salvando o sorteio do usuário
         .then(() => {
             console.log("Sorteio salvo com sucesso!");
-            mostrarResultado(sorteios, nomeUsuario);  // Passando o nome do usuário para mostrar apenas o sorteio dele
+            mostrarResultado(nomeUsuario, sorteado);  // Passando o nome do usuário e o sorteio dele
         })
         .catch((error) => {
             console.log("Erro ao salvar sorteio: ", error);
@@ -87,13 +90,13 @@ function salvarSorteio(sorteios, nomeUsuario) {
 }
 
 // Função para mostrar o resultado do sorteio apenas para o usuário
-function mostrarResultado(sorteios, nomeUsuario) {
+function mostrarResultado(nomeUsuario, sorteado) {
     const resultadoDiv = document.getElementById('resultado');
     let resultadoHTML = ''; // Inicializando uma string vazia
 
     // Mostrar apenas o resultado para o usuário que fez o sorteio
-    if (sorteios[nomeUsuario]) {
-        resultadoHTML = `<p>${nomeUsuario} tirou ${sorteios[nomeUsuario]}</p>`;
+    if (sorteado) {
+        resultadoHTML = `<p>${nomeUsuario} tirou ${sorteado}</p>`;
     } else {
         resultadoHTML = '<p>Algo deu errado ao tentar mostrar o seu sorteio.</p>';
     }
