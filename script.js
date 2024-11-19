@@ -20,95 +20,89 @@ const database = getDatabase(app);
 
 // Lista de participantes
 const participantes = ["Maida", "Wesley", "Bryan", "Erick", "Emily", "Kauanny", "Alcione"];
-let sorteios = {};
 
 // Função para realizar o sorteio
 async function realizarSorteio() {
     const nomeUsuario = document.getElementById('nome').value.trim();
 
-    // Verificar se o nome foi inserido
     if (!nomeUsuario) {
         alert("Por favor, insira seu nome.");
         return;
     }
 
-    // Verificar se o nome está na lista de participantes
     if (!participantes.includes(nomeUsuario)) {
         const erroDiv = document.getElementById('erro');
         erroDiv.textContent = "Seu nome não está na lista de participantes.";
-        erroDiv.style.display = 'block';  // Exibe a mensagem de erro
+        erroDiv.style.display = 'block';
         return;
     }
 
-    // Verificar se o usuário já realizou o sorteio
-    const sorteioRef = ref(database, 'sorteios/' + nomeUsuario);  // Referência para o sorteio de um usuário específico
+    const sorteioRef = ref(database, 'sorteios');
     const snapshot = await get(sorteioRef);
 
-    if (snapshot.exists()) {
-        // Se o sorteio já foi realizado, mostrar o resultado
-        const sorteadoAnterior = snapshot.val();
+    if (snapshot.exists() && snapshot.val()[nomeUsuario]) {
+        const sorteadoAnterior = snapshot.val()[nomeUsuario];
         const erroDiv = document.getElementById('erro');
         erroDiv.textContent = "Você já realizou o sorteio! Você tirou " + sorteadoAnterior + ".";
-        erroDiv.style.display = 'block';  // Exibe a mensagem de erro
-        return;  // Retorna, não realizando outro sorteio
+        erroDiv.style.display = 'block';
+        return;
     }
 
-    // Limpa a mensagem de erro caso o nome seja válido e o usuário não tenha sorteado
     const erroDiv = document.getElementById('erro');
     erroDiv.style.display = 'none';
 
-    // Realiza o sorteio
-    let nomesDisponiveis = [...participantes];
-    let sorteados = new Set(); // Usamos um Set para garantir que ninguém seja sorteado duas vezes
-    let resultado = '';
+    let sorteados = snapshot.exists() ? new Set(Object.values(snapshot.val())) : new Set();
+    let nomesDisponiveis = participantes.filter(
+        nome => nome !== nomeUsuario && !sorteados.has(nome)
+    );
 
-    participantes.forEach(participante => {
-        let sorteado;
-        do {
-            sorteado = nomesDisponiveis[Math.floor(Math.random() * nomesDisponiveis.length)];
-        } while (
-            sorteado === participante || // Não pode sortear a si mesmo
-            sorteados.has(sorteado) || // Não pode repetir sorteio
-            (["Maida", "Emily"].includes(participante) && (sorteado === "Bryan" || sorteado === "Erick")) // Restrições de quem pode ser sorteado
+    if (["Maida", "Emily"].includes(nomeUsuario)) {
+        nomesDisponiveis = nomesDisponiveis.filter(
+            nome => nome !== "Bryan" && nome !== "Erick"
         );
-        sorteios[participante] = sorteado;
-        sorteados.add(sorteado); // Adiciona o sorteado ao Set para não ser sorteado novamente
-        nomesDisponiveis = nomesDisponiveis.filter(nome => nome !== sorteado);
-    });
+    }
 
-    // Salva o sorteio do usuário específico
-    resultado = sorteios[nomeUsuario];
-    salvarSorteio(nomeUsuario, resultado);  // Salva o sorteio do usuário específico
+    if (nomesDisponiveis.length === 0) {
+        alert("Não há mais nomes disponíveis para sortear.");
+        return;
+    }
+
+    const sorteado = nomesDisponiveis[Math.floor(Math.random() * nomesDisponiveis.length)];
+
+    try {
+        await update(ref(database, 'sorteios'), { [nomeUsuario]: sorteado });
+        mostrarResultado(nomeUsuario, sorteado);
+    } catch (error) {
+        console.error("Erro ao salvar o sorteio: ", error);
+    }
 }
 
 // Função para salvar o sorteio no Firebase
 async function salvarSorteio(nomeUsuario, sorteado) {
-    const sorteioRef = ref(database, 'sorteios/' + nomeUsuario);  // Referência para o sorteio de um usuário específico
+    const sorteioRef = ref(database, 'sorteios/' + nomeUsuario);
     try {
-        await set(sorteioRef, sorteado);  // Salvando o sorteio do usuário
+        await set(sorteioRef, sorteado);
         console.log("Sorteio salvo com sucesso!");
-        mostrarResultado(nomeUsuario, sorteado);  // Passando o nome do usuário e o sorteio dele
+        mostrarResultado(nomeUsuario, sorteado);
     } catch (error) {
-        console.log("Erro ao salvar sorteio: ", error);
+        console.error("Erro ao salvar sorteio: ", error);
     }
 }
 
 // Função para mostrar o resultado do sorteio apenas para o usuário
 function mostrarResultado(nomeUsuario, sorteado) {
     const resultadoDiv = document.getElementById('resultado');
-    let resultadoHTML = ''; // Inicializando uma string vazia
+    let resultadoHTML = '';
 
-    // Mostrar apenas o resultado para o usuário que fez o sorteio
     if (sorteado) {
         resultadoHTML = `<p>${nomeUsuario} tirou ${sorteado}</p>`;
     } else {
         resultadoHTML = '<p>Algo deu errado ao tentar mostrar o seu sorteio.</p>';
     }
 
-    // Definir o HTML formatado
     resultadoDiv.innerHTML = resultadoHTML;
     resultadoDiv.style.display = 'block';
 }
 
-// Vinculando o evento de clique ao botão
+// Vincular o evento de clique ao botão
 document.getElementById('sortearButton').addEventListener('click', realizarSorteio);
