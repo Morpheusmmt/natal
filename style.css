@@ -1,0 +1,121 @@
+/* Estilo básico */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+h2 {
+    color: #2c3e50;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #e74c3c; /* Vermelho natalino */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #c0392b;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#resultado, #erro {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1c40f; /* Amarelo natalino */
+    border-radius: 5px;
+    display: none;
+}
+
+#erro {
+    background-color: #27ae60; /* Verde natalino suave */
+}
+
+#erro p {
+    color: #fff;
+}
+
+/* Media Query para dispositivos pequenos (móveis) */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    button {
+        padding: 12px 20px;
+    }
+
+    input {
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+}
+
+/* Media Query para dispositivos médios (tablets) */
+@media (max-width: 768px) and (min-width: 601px) {
+    .container {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    button {
+        padding: 12px 20px;
+    }
+
+    input {
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}
+
+/* Media Query para dispositivos grandes (desktop) */
+@media (min-width: 769px) {
+    .container {
+        padding: 30px;
+        margin: 30px auto;
+    }
+
+    button {
+        padding: 15px 30px;
+    }
+
+    input {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}
