@@ -1,98 +1,104 @@
 /* Estilo básico */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f1f1f1;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf2e9; /* Cor suave de fundo */
+    color: #2c3e50; /* Cor escura para texto */
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
     max-width: 600px;
+    width: 100%;
     margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Branco neve */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    text-align: center;
 }
 
 h2 {
-    color: #2c3e50;
+    color: #e74c3c; /* Vermelho Natalino Suave */
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #e74c3c; /* Vermelho natalino */
+    padding: 12px 25px;
+    background-color: #c0392b; /* Vermelho Natalino */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #c0392b;
+    background-color: #e74c3c; /* Vermelho mais forte no hover */
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #e74c3c; /* Borda suave vermelha */
     box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #16a085; /* Verde suave de Natal */
+    outline: none;
 }
 
 #resultado, #erro {
     margin-top: 20px;
-    padding: 10px;
-    background-color: #f1c40f; /* Amarelo natalino */
-    border-radius: 5px;
+    padding: 15px;
+    border-radius: 10px;
     display: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#resultado {
+    background-color: #27ae60; /* Verde Natalino suave */
+    color: #fff;
 }
 
 #erro {
-    background-color: #27ae60; /* Verde natalino suave */
+    background-color: #e74c3c; /* Vermelho Natalino */
+    color: #fff;
 }
 
 #erro p {
-    color: #fff;
+    margin: 0;
 }
 
 /* Media Query para dispositivos pequenos (móveis) */
 @media (max-width: 600px) {
     .container {
-        padding: 15px;
+        padding: 20px;
         margin: 10px;
     }
 
     button {
-        padding: 12px 20px;
+        padding: 14px 20px;
     }
 
     input {
-        padding: 12px;
-    }
-
-    h2 {
-        font-size: 18px;
-    }
-}
-
-/* Media Query para dispositivos médios (tablets) */
-@media (max-width: 768px) and (min-width: 601px) {
-    .container {
-        padding: 20px;
-        margin: 15px;
-    }
-
-    button {
-        padding: 12px 20px;
-    }
-
-    input {
-        padding: 12px;
+        padding: 14px;
     }
 
     h2 {
@@ -100,22 +106,42 @@ input {
     }
 }
 
-/* Media Query para dispositivos grandes (desktop) */
-@media (min-width: 769px) {
+/* Media Query para dispositivos médios (tablets) */
+@media (max-width: 768px) and (min-width: 601px) {
     .container {
-        padding: 30px;
-        margin: 30px auto;
+        padding: 25px;
+        margin: 15px;
     }
 
     button {
-        padding: 15px 30px;
+        padding: 14px 25px;
     }
 
     input {
-        padding: 15px;
+        padding: 14px;
     }
 
     h2 {
         font-size: 24px;
+    }
+}
+
+/* Media Query para dispositivos grandes (desktop) */
+@media (min-width: 769px) {
+    .container {
+        padding: 40px;
+        margin: 30px auto;
+    }
+
+    button {
+        padding: 16px 30px;
+    }
+
+    input {
+        padding: 16px;
+    }
+
+    h2 {
+        font-size: 30px;
     }
 }
