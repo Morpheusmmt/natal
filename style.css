@@ -1,8 +1,8 @@
 /* Estilo básico */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fdf2e9; /* Cor suave de fundo */
-    color: #2c3e50; /* Cor escura para texto */
+    background-color: #ecf0f1; /* Cor suave de fundo */
+    color: #34495e; /* Cor escura para texto */
     margin: 0;
     padding: 0;
     display: flex;
@@ -24,7 +24,7 @@ body {
 }
 
 h2 {
-    color: #e74c3c; /* Vermelho Natalino Suave */
+    color: #2ecc71; /* Verde principal */
     font-size: 30px;
     margin-bottom: 20px;
     font-weight: 600;
@@ -33,7 +33,7 @@ h2 {
 
 button {
     padding: 12px 25px;
-    background-color: #c0392b; /* Vermelho Natalino */
+    background-color: #2ecc71; /* Verde principal */
     color: white;
     border: none;
     border-radius: 10px;
@@ -44,7 +44,7 @@ button {
 }
 
 button:hover {
-    background-color: #e74c3c; /* Vermelho mais forte no hover */
+    background-color: #27ae60; /* Verde mais escuro no hover */
 }
 
 input {
@@ -52,14 +52,14 @@ input {
     padding: 12px;
     margin-top: 15px;
     border-radius: 10px;
-    border: 1px solid #e74c3c; /* Borda suave vermelha */
+    border: 1px solid #2ecc71; /* Borda verde */
     box-sizing: border-box;
     font-size: 16px;
     transition: border-color 0.3s ease;
 }
 
 input:focus {
-    border-color: #16a085; /* Verde suave de Natal */
+    border-color: #27ae60; /* Verde mais escuro ao focar */
     outline: none;
 }
 
@@ -73,12 +73,12 @@ input:focus {
 }
 
 #resultado {
-    background-color: #27ae60; /* Verde Natalino suave */
+    background-color: #2ecc71; /* Verde de sucesso */
     color: #fff;
 }
 
 #erro {
-    background-color: #e74c3c; /* Vermelho Natalino */
+    background-color: #e74c3c; /* Vermelho para erro */
     color: #fff;
 }
 
