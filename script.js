@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Lista de participantes
-const participantes = ["Maida", "Bryan", "Erick", "João", "Maria"];
+const participantes = ["Maida", "Bryan", "Erick", "Emily", "Kauanny", "Alcione"];
 let sorteios = {};
 
 // Função para realizar o sorteio
