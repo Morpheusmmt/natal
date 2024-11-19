@@ -1,14 +1,20 @@
 /* Estilo básico */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ecf0f1; /* Cor suave de fundo */
-    color: #34495e; /* Cor escura para texto */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: background-color 0.5s ease; /* Suaviza a mudança de fundo */
+    border-radius: 15px; /* Arredonda as bordas do body */
+}
+
+/* Tema claro */
+body {
+    background-color: #ecf0f1; /* Cor suave de fundo */
+    color: #34495e; /* Cor escura para texto */
 }
 
 .container {
@@ -17,10 +23,11 @@ body {
     margin: 20px auto;
     background-color: #ffffff; /* Branco neve */
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Borda arredondada */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
     box-sizing: border-box;
     text-align: center;
+    transition: transform 0.3s ease-in-out; /* Efeito de animação */
 }
 
 h2 {
@@ -29,47 +36,59 @@ h2 {
     margin-bottom: 20px;
     font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 1px; /* Espaçamento entre as letras */
 }
 
 button {
-    padding: 12px 25px;
+    padding: 14px 28px;
     background-color: #2ecc71; /* Verde principal */
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 10px; /* Borda arredondada */
     cursor: pointer;
     width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-sizing: border-box;
 }
 
 button:hover {
     background-color: #27ae60; /* Verde mais escuro no hover */
+    transform: scale(1.05); /* Efeito de zoom no hover */
+}
+
+button:active {
+    background-color: #1e8449; /* Verde ainda mais escuro quando pressionado */
 }
 
 input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-top: 15px;
-    border-radius: 10px;
+    margin-bottom: 20px; /* Adiciona espaço abaixo do input */
+    border-radius: 10px; /* Borda arredondada */
     border: 1px solid #2ecc71; /* Borda verde */
     box-sizing: border-box;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input:focus {
     border-color: #27ae60; /* Verde mais escuro ao focar */
     outline: none;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5); /* Sombra suave no foco */
 }
 
 #resultado, #erro {
     margin-top: 20px;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 10px; /* Borda arredondada */
     display: none;
     font-size: 16px;
     font-weight: 500;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
 }
 
 #resultado {
@@ -86,7 +105,57 @@ input:focus {
     margin: 0;
 }
 
-/* Media Query para dispositivos pequenos (móveis) */
+#resultado.show, #erro.show {
+    opacity: 1; /* Exibe com transição */
+}
+
+/* Tema escuro */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #2c3e50; /* Fundo escuro */
+        color: #ecf0f1; /* Texto claro */
+    }
+
+    .container {
+        background-color: #34495e; /* Caixa com fundo mais escuro */
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Sombra mais suave */
+        border-radius: 15px; /* Borda arredondada */
+    }
+
+    h2 {
+        color: #2ecc71; /* Verde principal */
+    }
+
+    button {
+        background-color: #27ae60; /* Verde mais escuro */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    button:hover {
+        background-color: #1e8449; /* Verde ainda mais escuro no hover */
+    }
+
+    input {
+        border: 1px solid #27ae60; /* Borda verde mais escura */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    input:focus {
+        border-color: #1e8449; /* Borda mais escura ao focar */
+    }
+
+    #resultado {
+        background-color: #2ecc71; /* Verde de sucesso */
+        color: #fff;
+    }
+
+    #erro {
+        background-color: #e74c3c; /* Vermelho para erro */
+        color: #fff;
+    }
+}
+
+/* Ajustes para os outros dispositivos (tamanho de tela) */
 @media (max-width: 600px) {
     .container {
         padding: 20px;
@@ -106,7 +175,6 @@ input:focus {
     }
 }
 
-/* Media Query para dispositivos médios (tablets) */
 @media (max-width: 768px) and (min-width: 601px) {
     .container {
         padding: 25px;
@@ -126,7 +194,6 @@ input:focus {
     }
 }
 
-/* Media Query para dispositivos grandes (desktop) */
 @media (min-width: 769px) {
     .container {
         padding: 40px;
